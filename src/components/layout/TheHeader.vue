@@ -29,14 +29,13 @@
 export default {
   computed: {
     isLoggedIn() {
-   //  return this.$store.getters.isAuthenticated;
-   return false
+    return this.$store.getters.isAuthenticated;
     },
   },
   methods: {
     logout() {
-    //  this.$store.dispatch('logout');
-    //  this.$router.replace('/coaches');
+      this.$store.dispatch('logout');
+     this.$router.replace('/public');
     },
   },
 };

@@ -4,7 +4,9 @@ export default {
         state.userId = payload.userId
         state.didAutoLogout = false
     },
+    // serve solo per cambiare pagina, solo quando si fa autologout, cioe quando finisce il tempo
     setAutoLogout(state) {
         state.didAutoLogout = true
-    }
+    },
+
 };

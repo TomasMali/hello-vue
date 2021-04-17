@@ -6,21 +6,42 @@ import UserRegister from './pages/auth/UserRegister.vue'
 import UserLogin from './pages/auth/UserLogin.vue'
 import NotFound from './pages/NotFound.vue'
 
+import store from './store/index.js'
+
 
 const router = createRouter({
     history: createWebHistory(),
     routes: [
         { path: '/', redirect: '/public' },
         { path: '/public', component: PagePubblic },
-        { path: '/private', component: PagePrivate },
+        { path: '/private', component: PagePrivate, meta: { privateProtection: true } },
 
-        { path: '/register', component: UserRegister },
-        { path: "/login", component: UserLogin },
+        { path: '/register', component: UserRegister, meta: { registerProtection: true } },
+        { path: "/login", component: UserLogin, meta: { loginProtection: true } },
         { path: '/:notFound(.*)', component: NotFound }
     ]
 });
 
 
+/**
+ * To -> is the route where we are going to
+ */
+router.beforeEach(function(to, _, next) {
+    // se è  rischiesta la protezione e non siamo autenticati, blocco l'utente
+    if (to.meta.privateProtection && !store.getters.isAuthenticated) {
+        next('/login')
+    }
+    // se sono loggato e voglio fare il login
+    if (to.meta.loginProtection && store.getters.isAuthenticated) {
+        next('/private')
+    }
+    // se sono loggato e voglio fare la registrazione
+    if (to.meta.registerProtection && store.getters.isAuthenticated) {
+        next('/private')
+    }
 
+
+    next()
+})
 
 export default router

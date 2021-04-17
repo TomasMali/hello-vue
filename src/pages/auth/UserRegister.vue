@@ -1,4 +1,5 @@
 <template>
+  <div>
     <base-dialog
       :show="!!error"
       title="An error occurred!"
@@ -6,68 +7,69 @@
       >{{ error }}</base-dialog
     >
 
-  <base-dialog :show="isLoading" fixed title="Authenticating...">
-    <base-spinner></base-spinner>
-  </base-dialog>
+    <base-dialog :show="isLoading" fixed title="Authenticating...">
+      <base-spinner></base-spinner>
+    </base-dialog>
 
-  <base-card>
-    <form @submit.prevent="formSubmit">
-      <div class="form-control">
-        <label for="name">Name</label>
-        <input
-          type="text"
-          id="name"
-          v-model.trim="name.value"
-          @blur="nameValidation"
-        />
-        <p v-if="!name.isValid">Please enter your name</p>
-      </div>
+    <base-card>
+      <form @submit.prevent="formSubmit">
+        <div class="form-control">
+          <label for="name">Name</label>
+          <input
+            type="text"
+            id="name"
+            v-model.trim="name.value"
+            @blur="nameValidation"
+          />
+          <p v-if="!name.isValid">Please enter your name</p>
+        </div>
 
-      <div class="form-control">
-        <label for="surname">Surname</label>
-        <input
-          type="text"
-          id="surname"
-          v-model.trim="surname.value"
-          @blur="surnameValidation"
-        />
-        <p v-if="!surname.isValid">Please enter your surname</p>
-      </div>
+        <div class="form-control">
+          <label for="surname">Surname</label>
+          <input
+            type="text"
+            id="surname"
+            v-model.trim="surname.value"
+            @blur="surnameValidation"
+          />
+          <p v-if="!surname.isValid">Please enter your surname</p>
+        </div>
 
-      <div class="form-control">
-        <label for="email">E-Mail</label>
-        <input
-          type="email"
-          id="email"
-          v-model.trim="email.value"
-          @blur="emailValidation"
-        />
-        <p v-if="!email.isValid">Please enter a valid email</p>
-      </div>
-      <div class="form-control">
-        <label for="password">Password</label>
-        <input
-          type="password"
-          id="password"
-          v-model="password.value"
-          @blur="passwordValidation"
-        />
-        <p v-if="!password.isValid">Please enter a valid password</p>
-      </div>
-      <div class="form-control">
-        <label for="confirm">Confirm Password</label>
-        <input
-          type="password"
-          id="confirm"
-          v-model="confirm.value"
-          @blur="confirmValidation"
-        />
-        <p v-if="!confirm.isValid">The password doesn't match!</p>
-      </div>
+        <div class="form-control">
+          <label for="email">E-Mail</label>
+          <input
+            type="email"
+            id="email"
+            v-model.trim="email.value"
+            @blur="emailValidation"
+          />
+          <p v-if="!email.isValid">Please enter a valid email</p>
+        </div>
+        <div class="form-control">
+          <label for="password">Password</label>
+          <input
+            type="password"
+            id="password"
+            v-model="password.value"
+            @blur="passwordValidation"
+          />
+          <p v-if="!password.isValid">Please enter a valid password</p>
+        </div>
+        <div class="form-control">
+          <label for="confirm">Confirm Password</label>
+          <input
+            type="password"
+            id="confirm"
+            v-model="confirm.value"
+            @blur="confirmValidation"
+          />
+          <p v-if="!confirm.isValid">The password doesn't match!</p>
+        </div>
 
-      <base-button>Register</base-button>
-    </form>
-  </base-card>
+        <base-button>Register</base-button>
+      </form>
+    </base-card>
+  </div>
 </template>
 
 
@@ -124,15 +126,17 @@ export default {
       // do the post
       try {
         await this.$store.dispatch("register", actionPayload);
+        alert(
+          "User " +
+            actionPayload.name +
+            " " +
+            actionPayload.surname +
+            " registered successfully"
+        );
         const redirecturl = "/" + (this.$route.query.redirect || "public");
         this.$router.replace(redirecturl);
       } catch (error) {
-        if (error)
-          this.error =
-            "User with email: " + actionPayload.email + " already exists" ||
-            "Failed to register";
-        else this.error = "Failed to register";
-
+        this.error = error.message || "Failed to authenticate";
       }
       this.isLoading = false;
     },
@@ -182,7 +186,7 @@ export default {
         this.confirm.isValid = false;
       }
     },
-        handleError() {
+    handleError() {
       this.error = null;
     },
   },

@@ -5,8 +5,10 @@
 <template>
   <the-header></the-header>
 
-  <router-view >
-
+  <router-view v-slot="slotProps">
+    <transition name="route" mode="out-in">
+      <component :is="slotProps.Component"></component>
+    </transition>
   </router-view>
 </template>
 
@@ -18,8 +20,28 @@ export default {
   components: {
     TheHeader,
   },
+  created() {
+    this.$store.dispatch("tryLogin");
+  },
+  computed: {
+    didAutoLogout() {
+      return this.$store.getters.didAutoLogout;
+    },
+  },
+  watch: {
+    didAutoLogout(newValue, oldValue){
+      if(newValue && newValue !== oldValue){
+        this.$router.replace('/public')
+      }
+    }
+  }
 };
 </script>
+
+
+
+
+
 <style>
 @import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap");
 

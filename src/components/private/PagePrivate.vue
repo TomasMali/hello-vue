@@ -1,30 +1,33 @@
 <template>
+  <div>
     <h1>PRIVATE</h1>
 
-<h2>CSS Template using Float</h2>
-<p>In this example, we have created a header, three unequal columns and a footer. On smaller screens, the columns will stack on top of each other.</p>
-<p>Resize the browser window to see the responsive effect.</p>
+    <h2>CSS Template using Float</h2>
+    <p>
+      In this example, we have created a header, three unequal columns and a
+      footer. On smaller screens, the columns will stack on top of each other.
+    </p>
+    <p>Resize the browser window to see the responsive effect.</p>
 
-<div class="header">
-  <h2>Header</h2>
-</div>
+    <div class="header">
+      <h2>Header</h2>
+    </div>
 
-<div class="row">
-  <div class="column side" style="background-color:#aaa;">Column</div>
-  <div class="column middle" style="background-color:#bbb;">Column</div>
-  <div class="column side" style="background-color:#ccc;">Column</div>
-</div>
+    <div class="row">
+      <div class="column side" style="background-color: #aaa">Column</div>
+      <div class="column middle" style="background-color: #bbb">Column</div>
+      <div class="column side" style="background-color: #ccc">Column</div>
+    </div>
 
-<div class="footer">
-  <p>Footer</p>
-</div>
+    <div class="footer">
+      <p>Footer</p>
+    </div>
+  </div>
 </template>
 
 
 <script>
-export default {
-
-}
+export default {};
 </script>
 
 
@@ -32,7 +35,6 @@ export default {
 
 
 <style>
-
 /* Style the header */
 .header {
   background-color: #f1f1f1;
@@ -74,7 +76,8 @@ export default {
 
 /* Responsive layout - makes the three columns stack on top of each other instead of next to each other */
 @media (max-width: 600px) {
-  .column.side, .column.middle {
+  .column.side,
+  .column.middle {
     width: 100%;
   }
 }

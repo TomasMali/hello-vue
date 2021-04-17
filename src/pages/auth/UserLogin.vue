@@ -1,30 +1,44 @@
 <template>
-  <base-card>
-    <form @submit.prevent="formSubmit">
-      <div class="form-control">
-        <label for="email">Login</label>
-        <input
-          type="email"
-          id="email"
-          v-model.trim="email.value"
-          @blur="emailValidation"
-        />
-        <p v-if="!email.isValid">Please enter a valid email</p>
-      </div>
-      <div class="form-control">
-        <label for="password">Password</label>
-        <input
-          type="password"
-          id="password"
-          v-model.number="password.value"
-          @blur="passwordValidation"
-        />
-        <p v-if="!password.isValid">Password is required!!</p>
-      </div>
+  <div>
+    <base-dialog
+      :show="!!error"
+      title="An error occurred!"
+      @close="handleError"
+      >{{ error }}</base-dialog
+    >
 
-      <base-button>Login</base-button>
-    </form>
-  </base-card>
+    <base-dialog :show="isLoading" fixed title="Login...">
+      <base-spinner></base-spinner>
+    </base-dialog>
+
+    <base-card>
+      <form @submit.prevent="formSubmit">
+        <div class="form-control">
+          <label for="email">Login</label>
+          <input
+            type="email"
+            id="email"
+            v-model.trim="email.value"
+            @blur="emailValidation"
+          />
+          <p v-if="!email.isValid">Please enter a valid email</p>
+        </div>
+        <div class="form-control">
+          <label for="password">Password</label>
+          <input
+            type="password"
+            id="password"
+            v-model.number="password.value"
+            @blur="passwordValidation"
+          />
+          <p v-if="!password.isValid">Password is required!!</p>
+        </div>
+
+        <base-button>Login</base-button>
+        If not yet <router-link to="/register">Register</router-link> to signup!
+      </form>
+    </base-card>
+  </div>
 </template>
 
 
@@ -44,15 +58,34 @@ export default {
         isValid: true,
       },
       isFormValid: true,
+      error: null,
+      isLoading: false,
     };
   },
   methods: {
-    formSubmit() {
+    async formSubmit() {
       this.emailValidation();
       this.passwordValidation();
       if (!this.isFormValid) {
         return;
       }
+      this.isLoading = true;
+
+      const actionPayload = {
+        email: this.email.value,
+        password: this.password.value,
+      };
+
+      try {
+        await this.$store.dispatch("login", actionPayload);
+        // this.$route.query.redirect serve per prendere la query ?redirect=login
+        const redirecturl = "/" + (this.$route.query.redirect || "public");
+        this.$router.replace(redirecturl);
+      } catch (error) {
+        this.error = error.message || "Failed to authenticate";
+      }
+
+      this.isLoading = false;
     },
     emailValidation() {
       this.email.isValid = true;
@@ -69,6 +102,9 @@ export default {
         this.isFormValid = false;
         this.password.isValid = false;
       }
+    },
+    handleError() {
+      this.error = null;
     },
   },
   computed: {},
