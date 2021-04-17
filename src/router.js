@@ -5,7 +5,8 @@ import PagePrivate from './components/private/PagePrivate.vue'
 import UserRegister from './pages/auth/UserRegister.vue'
 import UserLogin from './pages/auth/UserLogin.vue'
 import NotFound from './pages/NotFound.vue'
-
+import ResetPassword from './pages/auth/ResetPassword.vue'
+import ChangePassword from './pages/auth/ChangePassword.vue'
 import store from './store/index.js'
 
 
@@ -18,6 +19,9 @@ const router = createRouter({
 
         { path: '/register', component: UserRegister, meta: { registerProtection: true } },
         { path: "/login", component: UserLogin, meta: { loginProtection: true } },
+        { path: '/resetPassword', component: ResetPassword },
+        { path: '/changePassword', component: ChangePassword },
+
         { path: '/:notFound(.*)', component: NotFound }
     ]
 });

@@ -4,7 +4,7 @@
 <template>
   <header>
     <nav>
-      <h1><router-link to="/"> Authentication</router-link></h1>
+      <h1><router-link to="/"> Auth</router-link></h1>
       <ul>
         <li><router-link to="/public">Public</router-link></li>
         <li v-if="isLoggedIn">
@@ -59,7 +59,7 @@ header a {
   text-decoration: none;
   color: #f391e3;
   display: inline-block;
-  padding: 0.75rem 1.5rem;
+  padding: 0.75rem 1rem;
   border: 1px solid transparent;
 }
 
@@ -102,6 +102,6 @@ header ul {
 }
 
 li {
-  margin: 0 0.5rem;
+  margin: 0 0.2rem;
 }
 </style>

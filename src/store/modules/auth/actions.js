@@ -104,6 +104,74 @@ export default {
 
     },
 
+
+
+
+
+    async resetPassword(_, payload) {
+
+        let url = cred.dev.url_reset_password
+
+        console.log(payload)
+        const response = await fetch(url, {
+            method: 'POST',
+            cache: 'no-cache',
+            credentials: 'same-origin',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            redirect: 'follow',
+            referrerPolicy: 'no-referrer',
+            enctype: 'mutipart/form-data',
+
+            body: JSON.stringify({
+                email: payload.email,
+            })
+        });
+        const responseData = await response.json()
+
+        if (!response.ok) {
+            if (responseData.code === 409) {
+                throw new Error(responseData.message)
+            } else
+                throw new Error("Request failed with error code: " + response.status)
+
+        }
+    },
+    async changePassword(_, payload) {
+
+
+        let url = cred.dev.url_change_password
+
+        console.log(payload)
+        const response = await fetch(url, {
+            method: 'POST',
+            cache: 'no-cache',
+            credentials: 'same-origin',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            redirect: 'follow',
+            referrerPolicy: 'no-referrer',
+            enctype: 'mutipart/form-data',
+
+            body: JSON.stringify({
+                email: payload.email,
+                password: payload.password
+            })
+        });
+
+        if (!response.ok) {
+            throw new Error("Request failed with error code: " + response.status)
+        }
+
+
+    },
+
+
+
+
+
     /**
      * Get calls in every page riload
      * @param {*} _ 

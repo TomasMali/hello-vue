@@ -35,6 +35,7 @@
         </div>
 
         <base-button>Login</base-button>
+        
         If not yet <router-link to="/register">Register</router-link> to signup!
       </form>
     </base-card>
