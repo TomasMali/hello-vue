@@ -30,6 +30,7 @@
                 id="password"
                 v-model.trim="password"
                 @blur="validatePassword"
+                :class="{error: !isValid}"
               />
             </p>
             <p>
@@ -40,11 +41,15 @@
                 id="passwordConfirm"
                 v-model.trim="passwordConfirm"
                 @blur="validatePasswordConfirm"
+                :class="{error: !isValidConfirm}"
               />
             </p>
 
             <p v-if="!isValid" class="w3-text-red">
               Please enter a valid password
+            </p>
+             <p v-else-if="!isValidConfirm" class="w3-text-red">
+              The passwords doesn't match
             </p>
             <p><button class="w3-button w3-block w3-blue">Change</button></p>
           </form>
@@ -79,14 +84,13 @@ export default {
       }
       this.isLoading = true;
 
-      console.log("Email is: " + this.$route.query.email);
       // do the post
       try {
         await this.$store.dispatch("changePassword", {
           email: this.$route.query.email,
           password: this.password,
         });
-
+        this.isLoading = false;
         alert("Your password has been reseted successfully!");
 
         const redirecturl = "/login";
@@ -116,10 +120,13 @@ export default {
     handleError() {
       this.error = null;
     },
-  },
+  }
 };
 </script>
 
 
 <style scoped>
+.error{
+    border-color: red;
+}
 </style>

@@ -35,8 +35,13 @@
         </div>
 
         <base-button>Login</base-button>
-        
-        If not yet <router-link to="/register">Register</router-link> to signup!
+<p>
+        If not yet, <router-link to="/register">Register</router-link> to signup!
+</p>
+<p v-if="wrongPassword > 2">
+      Seems like You dont remember your pssword, <router-link :to="linkWithEmail">Reset password</router-link> 
+</p>
+
       </form>
     </base-card>
   </div>
@@ -61,6 +66,7 @@ export default {
       isFormValid: true,
       error: null,
       isLoading: false,
+      wrongPassword: 0
     };
   },
   methods: {
@@ -83,7 +89,9 @@ export default {
         const redirecturl = "/" + (this.$route.query.redirect || "public");
         this.$router.replace(redirecturl);
       } catch (error) {
+        this.wrongPassword++
         this.error = error.message || "Failed to authenticate";
+        this.password.value = ""
       }
 
       this.isLoading = false;
@@ -108,7 +116,11 @@ export default {
       this.error = null;
     },
   },
-  computed: {},
+  computed: {
+    linkWithEmail(){
+      return "/resetPassword" +  (this.email.value !== '' ? ("?email=" + this.email.value) : "")
+    }
+  },
 };
 </script>
 

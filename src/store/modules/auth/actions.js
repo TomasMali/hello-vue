@@ -131,11 +131,7 @@ export default {
         const responseData = await response.json()
 
         if (!response.ok) {
-            if (responseData.code === 409) {
-                throw new Error(responseData.message)
-            } else
-                throw new Error("Request failed with error code: " + response.status)
-
+            throw new Error(responseData.message)
         }
     },
     async changePassword(_, payload) {

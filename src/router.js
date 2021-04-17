@@ -19,8 +19,8 @@ const router = createRouter({
 
         { path: '/register', component: UserRegister, meta: { registerProtection: true } },
         { path: "/login", component: UserLogin, meta: { loginProtection: true } },
-        { path: '/resetPassword', component: ResetPassword },
-        { path: '/changePassword', component: ChangePassword },
+        { path: '/resetPassword', component: ResetPassword, meta: { resetProtection: true } },
+        { path: '/changePassword', component: ChangePassword, meta: { changeProtection: true } },
 
         { path: '/:notFound(.*)', component: NotFound }
     ]
@@ -41,6 +41,16 @@ router.beforeEach(function(to, _, next) {
     }
     // se sono loggato e voglio fare la registrazione
     if (to.meta.registerProtection && store.getters.isAuthenticated) {
+        next('/private')
+    }
+
+    // se sono loggato non posso resettare la password
+    if (to.meta.resetProtection && store.getters.isAuthenticated) {
+        next('/private')
+    }
+
+    // se sono loggato non posso cambiare la password
+    if (to.meta.changeProtection && store.getters.isAuthenticated) {
         next('/private')
     }
 
