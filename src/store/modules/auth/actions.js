@@ -14,16 +14,12 @@ export default {
 
         const response = await fetch(url, {
             method: 'POST',
-            mode: 'cors', // no-cors, *cors, same-origin
-            cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
-            credentials: 'same-origin', // include, *same-origin, omit
             headers: {
                 'Content-Type': 'application/json',
 
             },
             redirect: 'follow', // manual, *follow, error
             referrerPolicy: 'no-referrer',
-            enctype: 'mutipart/form-data',
             body: JSON.stringify({
                 email: payload.email,
                 password: payload.password
@@ -75,18 +71,15 @@ export default {
      * @param {*} payload 
      */
     async register(_, payload) {
-        let url = 'http://localhost:3000/register'
+
+        let url = cred.dev.url_register
         console.log(payload)
         const response = await fetch(url, {
             method: 'POST',
-            mode: 'cors', // no-cors, *cors, same-origin
             cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
             credentials: 'same-origin', // include, *same-origin, omit
             headers: {
-                //      'Content-Type': 'application/json',
-                'Content-Type': 'application/x-www-form-urlencoded',
-
-
+                'Content-Type': 'application/json'
             },
             redirect: 'follow', // manual, *follow, error
             referrerPolicy: 'no-referrer',
