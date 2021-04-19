@@ -30,7 +30,7 @@
                 id="password"
                 v-model.trim="password"
                 @blur="validatePassword"
-                :class="{error: !isValid}"
+                :class="{ error: !isValid }"
               />
             </p>
             <p>
@@ -41,18 +41,19 @@
                 id="passwordConfirm"
                 v-model.trim="passwordConfirm"
                 @blur="validatePasswordConfirm"
-                :class="{error: !isValidConfirm}"
+                :class="{ error: !isValidConfirm }"
               />
             </p>
 
             <p v-if="!isValid" class="w3-text-red">
               Please enter a valid password
             </p>
-             <p v-else-if="!isValidConfirm" class="w3-text-red">
+            <p v-else-if="!isValidConfirm" class="w3-text-red">
               The passwords doesn't match
             </p>
             <p><button class="w3-button w3-block w3-blue">Change</button></p>
           </form>
+          
         </div>
       </div>
       <div class="w3-third w3-container"></div>
@@ -120,13 +121,13 @@ export default {
     handleError() {
       this.error = null;
     },
-  }
+  },
 };
 </script>
 
 
 <style scoped>
-.error{
-    border-color: red;
+.error {
+  border-color: red;
 }
 </style>

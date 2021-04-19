@@ -11,40 +11,69 @@
       <base-spinner></base-spinner>
     </base-dialog>
 
-    <base-card>
-      <form @submit.prevent="formSubmit">
-        <div class="form-control">
-          <label for="email">Login</label>
-          <input
-            type="email"
-            id="email"
-            v-model.trim="email.value"
-            @blur="emailValidation"
-          />
-          <p v-if="!email.isValid">Please enter a valid email</p>
-        </div>
-        <div class="form-control">
-          <label for="password">Password</label>
-          <input
-            type="password"
-            id="password"
-            v-model.number="password.value"
-            @blur="passwordValidation"
-          />
-          <p v-if="!password.isValid">Password is required!!</p>
-        </div>
 
-        <base-button>Login</base-button>
-<p>
-        If not yet, <router-link to="/register">Register</router-link> to signup!
-</p>
-<p v-if="wrongPassword > 2">
-      Seems like You dont remember your pssword, <router-link :to="linkWithEmail">Reset password</router-link> 
-</p>
 
-      </form>
-    </base-card>
-  </div>
+    <div class="w3-row margin-all">
+      <div class="w3-quarter w3-container"></div>
+      <div class="w3-half w3-container">
+        <div class="w3-margin w3-card-4">
+          <div class="w3-container w3-blue w3-center">
+            <h3>Login</h3>
+          </div>
+
+          <form class="w3-container w3-margin" @submit.prevent="formSubmit">
+            <p>
+              <label for="email">Login</label>
+              <input
+                class="w3-input"
+                type="email"
+                id="email"
+                v-model.trim="email.value"
+                @blur="emailValidation"
+                :class="{ error: !email.isValid }"
+              />
+            </p>
+
+            <p v-if="!email.isValid" class="w3-text-red">
+              Please enter a valid email
+            </p>
+
+            <p>
+              <label for="password">Password</label>
+              <input
+                class="w3-input"
+                type="password"
+                id="password"
+                v-model.number="password.value"
+                @blur="passwordValidation"
+                :class="{ error: !password.isValid }"
+              />
+            </p>
+            <p v-if="!password.isValid" class="w3-text-red">
+              Password is required!!
+            </p>
+
+            <p class="w3-padding but"> <button class="w3-button w3-block w3-blue ">Login</button></p>
+            <h6 class=" w3-padding">
+              If not yet,
+              <router-link class="w3-text-blue" to="/register"
+                >Register</router-link
+              >
+              to signup!
+            </h6>
+            <h6 v-if="wrongPassword > 2" class="w3-text-orange w3-padding">
+              Seems like You dont remember your pssword,
+              <router-link class="w3-text-blue" :to="linkWithEmail"
+                >Reset password</router-link
+              >
+            </h6>
+          </form>
+        </div>
+      </div>
+      <div class="w3-quarter w3-container"></div>
+    </div>
+    </div>
+
 </template>
 
 
@@ -66,7 +95,7 @@ export default {
       isFormValid: true,
       error: null,
       isLoading: false,
-      wrongPassword: 0
+      wrongPassword: 0,
     };
   },
   methods: {
@@ -89,9 +118,9 @@ export default {
         const redirecturl = "/" + (this.$route.query.redirect || "public");
         this.$router.replace(redirecturl);
       } catch (error) {
-        this.wrongPassword++
+        this.wrongPassword++;
         this.error = error.message || "Failed to authenticate";
-        this.password.value = ""
+        this.password.value = "";
       }
 
       this.isLoading = false;
@@ -117,9 +146,12 @@ export default {
     },
   },
   computed: {
-    linkWithEmail(){
-      return "/resetPassword" +  (this.email.value !== '' ? ("?email=" + this.email.value) : "")
-    }
+    linkWithEmail() {
+      return (
+        "/resetPassword" +
+        (this.email.value !== "" ? "?email=" + this.email.value : "")
+      );
+    },
   },
 };
 </script>
@@ -131,36 +163,23 @@ export default {
 
 
 <style scoped>
-form {
-  margin: 1rem;
-  border: 1px solid #ccc;
 
-  padding: 1rem;
+.error {
+  border-color: red;
 }
 
-.form-control {
-  margin: 0.5rem 0;
+.login{
+  padding: 10px 154px;
 }
 
-label {
-  font-weight: bold;
-  margin-bottom: 0.5rem;
-  display: block;
+.but{
+  margin-top: 40px;
 }
 
-input,
-textarea {
-  display: block;
-  width: 100%;
-  font: inherit;
-  border: 1px solid #ccc;
-  padding: 0.15rem;
+.margin-all{
+  margin-top: 20px;
 }
 
-input:focus,
-textarea:focus {
-  border-color: #3d008d;
-  background-color: #faf6ff;
-  outline: none;
-}
+
+
 </style>
