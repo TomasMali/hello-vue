@@ -26,7 +26,7 @@
               <label for="email">Login</label>
               <input
                 class="w3-input"
-                type="email"
+                type="text"
                 id="email"
                 v-model.trim="email.value"
                 @blur="emailValidation"

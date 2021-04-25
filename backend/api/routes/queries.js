@@ -86,14 +86,17 @@ router.post("/login", (req, res, next) => {
 
     const email = req.body.email
     const password = req.body.password
+    console.log(email)
 
-    pool.query('SELECT * FROM users WHERE email = $1', [email], (error, results) => {
+    pool.query("SELECT * FROM users WHERE email = $1 ", [email], (error, results) => {
         if (error) {
             throw error
         }
+
         // se ho trovato l'utente a db
         if (results.rowCount > 0) {
-            // se la password coincide
+            console.log("OKKKKKKKkk")
+                // se la password coincide
             bcrypt.compare(password, results.rows[0].password, function(err_hash, result_hash) {
                 if (err_hash) {
                     return res.status(401).json({
