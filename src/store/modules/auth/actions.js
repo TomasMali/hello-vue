@@ -10,7 +10,7 @@ export default {
      */
     async login(context, payload) {
 
-        let url = cred.dev.url_login
+        let url = cred.prod.url_login
 
         const response = await fetch(url, {
             method: 'POST',
@@ -72,7 +72,7 @@ export default {
      */
     async register(_, payload) {
 
-        let url = cred.dev.url_register
+        let url = cred.prod.url_register
         console.log(payload)
         const response = await fetch(url, {
             method: 'POST',
@@ -110,7 +110,7 @@ export default {
 
     async resetPassword(_, payload) {
 
-        let url = cred.dev.url_reset_password
+        let url = cred.prod.url_reset_password
 
         console.log(payload)
         const response = await fetch(url, {
@@ -137,7 +137,7 @@ export default {
     async changePassword(_, payload) {
 
 
-        let url = cred.dev.url_change_password
+        let url = cred.prod.url_change_password
 
         console.log(payload)
         const response = await fetch(url, {

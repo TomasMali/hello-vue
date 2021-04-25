@@ -44,7 +44,7 @@ app.use('/user', user)
 //app.get('/tom/:id', db.getUserById)
 //app.post('/tom', db.createUser)
 
-app.use('/tom', db)
+
 app.use('/', db)
 
 
