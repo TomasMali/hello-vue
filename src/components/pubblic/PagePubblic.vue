@@ -127,7 +127,7 @@
             <div class="card hover:shadow-2xl transform hover:scale-105  transition ease-out duration-100">
               <img
                 class="w-full h-32 sm:h-48 object-cover"
-                :src="require(`@/assets/img/stew.jpg`)"
+                :src="stewImg"
                 alt="stew"
               />
               <div class="m-4">
@@ -155,7 +155,7 @@
             <div class="card hover:shadow-2xl transform hover:scale-105  transition ease-out duration-100">
               <img
                 class="w-full h-32 sm:h-48 object-cover"
-                :src="require(`@/assets/img/curry.jpg`)"
+                :src="curryImg"
                 alt="stew"
               />
               <div class="m-4">
@@ -183,7 +183,7 @@
             <div class="card hover:shadow-2xl transform hover:scale-105  transition ease-out duration-100">
               <img
                 class="w-full h-32 sm:h-48 object-cover"
-                :src="require(`@/assets/img/noodles.jpg`)"
+                :src="noodlesImg"
                 alt="stew"
               />
               <div class="m-4">
@@ -231,10 +231,16 @@
 
 
 <script>
+  import curryImg from "../../assets/img/curry.jpg";
+   import noodlesImg from "../../assets/img/noodles.jpg";
+    import stewImg from "../../assets/img/stew.jpg";
 export default {
   data() {
     return {
       menu: false,
+      curryImg,
+      noodlesImg,
+      stewImg
     };
   },
   methods: {
